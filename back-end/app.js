@@ -25,7 +25,7 @@ const port = process.env.NODE_ENV != "production" ? 3000 : 8888;
 const app = express();
 
 //initialize mongodb
-const dbURL = process.env.DB_URL
+const dbURL = process.env.NODE_ENV != "production" ? "mongodb://localhost:27017/RAiDTA" : process.env.DB_URL
 console.log('db url is: ', dbURL)
 async function main() {
     await mongoose.connect(dbURL)
@@ -154,6 +154,12 @@ app.get('/adminboard', isLoggedIn, isAdmin, async (req, res) => {
     const orderList = await Order.find({})
     console.log(orderList)
     res.json({ user: req.user, statusCode: res.statusCode, order: orderList })
+})
+
+
+//polling route
+app.get('/stayawake', (req,res)=>{
+    res.send('awake?')
 })
 
 //Default Route
