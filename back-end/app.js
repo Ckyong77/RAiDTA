@@ -59,7 +59,8 @@ const sessionConfig = {
         httpOnly: process.env.NODE_ENV != "production" ? false : true,
         secure: process.env.NODE_ENV != "production" ? false : true,
         expires: Date.now() + (1000 * 60 * 60 * 24 * 7), //session save for 1 week.
-        maxAge: 1000 * 60 * 60 * 24 * 7
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        sameSite:'none'
     }
 }
 
