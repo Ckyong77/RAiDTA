@@ -19,7 +19,7 @@ const Order = require('./models/order')
 const { isLoggedIn } = require('./middleware');
 const { isAdmin } = require('./middleware')
 
-const port = 3000;
+const port = process.env.NODE_ENV != "production" ? 3000 : 8888;
 
 //initialize express
 const app = express();
