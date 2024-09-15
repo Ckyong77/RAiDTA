@@ -1,0 +1,37 @@
+.regisWrapper{
+    background-color: grey;
+    margin: auto;
+    padding: 10px 100px 10px 100px;
+    border-radius: 20px;
+}
+
+.regisWrapper div{
+    text-align: center;
+}
+
+
+.regisWrapper input{
+    margin-bottom: 10px;
+    color: white;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.regisWrapper small{
+    color: red;
+    white-space: pre;
+}
+
+.regisWrapper button{
+    margin: 5px;
+    background-color: blue;
+    width:100px
+}
+
+.regisWrapper span{
+    align-items: center;
+}
+
+.formWrapper h1{
+    margin-left: 25px;
+}

@@ -1,0 +1,22 @@
+.totalCheckout{
+    text-align: right;
+    font-size: 20px;
+    margin-right: 10%;
+    margin-top: 5%;
+}
+
+
+.placeBtn {
+    background-color: #384B70;
+    margin: 5%
+}
+
+.cancelBtn{
+    background-color: #B8001F;
+    margin: 10%;
+}
+
+
+.tableRow :hover{
+    background-color: rgba(20, 33, 61, 0.2);
+}

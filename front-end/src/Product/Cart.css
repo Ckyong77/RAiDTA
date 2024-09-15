@@ -1,0 +1,33 @@
+.cartIcon{
+    border: 1px solid white;
+    background-color: beige;
+    border-radius: 100px;
+    padding: 20%;
+}
+
+.cartWrapper{
+    text-align: left;
+    position:sticky;
+    bottom:20px;
+}
+
+.cartItem{
+    background-color: beige;
+    width: 100%;
+    border-bottom: 2px solid grey;
+    border-radius: 20px;
+    padding-left: 10%;
+}
+
+.totalPrice{
+    border-top: 1px solid grey;
+    margin-top: 50%;
+    font-size: 40px;
+    bottom:20px;
+    text-align: center;
+}
+
+.totalPrice button{
+    background-color: #507687;
+    color: #FCFAEE;
+}

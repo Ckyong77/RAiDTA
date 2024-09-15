@@ -1,0 +1,34 @@
+.loginWrapper{
+    background-color: grey;
+    margin: auto;
+    padding: 10px 100px 10px 100px;
+    border-radius: 20px;
+}
+
+.loginWrapper div{
+    text-align: left;
+}
+
+
+.loginWrapper input{
+    margin-bottom: 10px;
+    color: white;
+    height: 30px;
+    border-radius: 10px;
+}
+
+
+.loginWrapper button{
+    margin: 5px;
+    background-color: blue;
+    width:100px
+}
+
+.formWrapper h1{
+    text-align: center;
+    margin-left: auto;
+}
+
+.formWrapper small{
+    color:red;
+}
