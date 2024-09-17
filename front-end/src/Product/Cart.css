@@ -6,9 +6,9 @@
 }
 
 .cartWrapper{
-    text-align: left;
     position:sticky;
     bottom:20px;
+    margin-left: 95%;
 }
 
 .cartItem{

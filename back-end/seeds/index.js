@@ -6,6 +6,8 @@ if (process.env.NODE_ENV !== "production") {
 const mongoose = require('mongoose')
 const Product = require('../models/product')
 const User = require('../models/user')
+const Cart = require('../models/cart')
+const Order = require('../models/order')
 
 const dbURL = process.env.NODE_ENV != "production" ? "mongodb://localhost:27017/RAiDTA" : process.env.DB_URL
 
@@ -35,6 +37,9 @@ const fruits = [
 
 const seedDB = async () => {
     await Product.deleteMany()
+    await Cart.deleteMany()
+    await Order.deleteMany()
+    await User.deleteMany()
     for (let i = 0; i < fruits.length; i++) {
         console.log(i)
         let price = (1 + Math.random() * 5).toFixed(2);

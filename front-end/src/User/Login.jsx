@@ -13,7 +13,9 @@ function Login() {
 
     const loginHandler = async (loginData) => {
         try {
-            let res = await axios.post(`/login`, { ...loginData })
+            let { username, password } = { ...loginData }
+            username = username.toLowerCase()
+            let res = await axios.post(`/login`, { username, password })
             console.log(res.data)
             reset();
             navigate('/')

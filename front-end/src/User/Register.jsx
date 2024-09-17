@@ -17,6 +17,7 @@ function Register() {
     }
 
     const registerHandler = (formData) => {
+        formData.username = formData.username.toLowerCase()
         let res = axios.post(`/register`, { formData })
         let data = res.data
         console.log(data)

@@ -113,10 +113,10 @@ app.delete('/deleteproduct', isLoggedIn, isAdmin, async (req, res) => {
 //User Routes 
 app.post('/register', async (req, res) => {
     try {
-        const { username, password, email, firstName, lastName } = req.body.formData
-        const newUser = await new User({ username, email, firstName, lastName, isAdmin: false })
+        const { username, password, firstName, lastName } = req.body.formData
+        const newUser = await new User({ username, firstName, lastName, isAdmin: false })
         await User.register(newUser, password)
-        res.json('success')
+        res.json('Registered')
     } catch (e) {
         res.json(e)
     }
@@ -147,23 +147,23 @@ app.post('/addcart', async (req, res) => {
     const userid = req.user._id;
     const foundUser = await User.findById(userid);
     const userCart = foundUser.cart
-    if(userCart.length > 0){
+    if (userCart.length > 0) {
         let available = false;
-        for(let cartItem of userCart){
-            if(cartItem.productId === product._id){
+        for (let cartItem of userCart) {
+            if (cartItem.productId === product._id) {
                 available = true
                 cartItem.quantity = cartItem.quantity + quantity
                 cartItem.totalPrice = cartItem.totalPrice + totalPrice
                 break
             }
         }
-        if(!available){
+        if (!available) {
             userCart.push(lineItems)
         }
-    }else{
+    } else {
         userCart.push(lineItems)
     }
-    await User.findByIdAndUpdate(userid, {...foundUser});
+    await User.findByIdAndUpdate(userid, { ...foundUser });
 })
 
 //order Route
