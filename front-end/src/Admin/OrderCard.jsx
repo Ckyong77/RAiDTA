@@ -17,7 +17,7 @@ function OrderCard({ fulfilled, lineItems, orderId }) {
     return (
         <Card sx={{ minWidth: 275 }}>
             <CardContent>
-                <Typography variant="h5" component="div">
+                <Typography variant="subtitle1" component="div">
                     Order ID: {orderId}
                 </Typography>
                 <Typography gutterBottom sx={{

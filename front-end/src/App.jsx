@@ -8,6 +8,7 @@ import Login from './User/Login'
 import Checkout from './Checkout/Checkout'
 import AdminBoard from './Admin/AdminBoard'
 import AddNew from './Admin/AddNew'
+import OrderHistory from './Customer/OrderHistory'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="orderhistory" element={<OrderHistory />} />
         <Route path="addnew" element={<AddNew />} />
         <Route path="adminboard" element={<AdminBoard />} />
         <Route path="checkout" element={<Checkout />} />

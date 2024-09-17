@@ -190,6 +190,13 @@ app.get('/adminboard', isLoggedIn, isAdmin, async (req, res) => {
     res.json({ user: req.user, statusCode: res.statusCode, order: orderList })
 })
 
+//Customer Route
+app.get('/customerBoard', isLoggedIn, async (req, res) => {
+    const currentUser = req.user._id
+    const cusOrder = await Order.find({ user: currentUser })
+    res.json({statusCode: res.statusCode, order: cusOrder })
+})
+
 
 //polling route
 app.get('/stayawake', (req, res) => {

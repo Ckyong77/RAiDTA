@@ -109,7 +109,9 @@ function HomePage() {
             <TopBar
                 navHandler={navHandler}
                 status={logStatus.status}
-                userDetails={logStatus.userDetails} />
+                userDetails={logStatus.userDetails} 
+                message = 'welcome'
+                page = "home"/>
             <Grid container spacing={2} className="homeGrid">
                 {adminStatus === true ? adminHomepage : userHomepage}
             </Grid>
