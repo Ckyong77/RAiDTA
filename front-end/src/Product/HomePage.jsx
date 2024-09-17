@@ -13,61 +13,105 @@ function HomePage() {
     const [logStatus, setLogStatus] = useState({ statusCode: 0, status: false, userDetails: {} })
     const [cart, setCart] = useState([])
     const [cartItem, setCartItem] = useState({})
+    const [adminStatus, setAdminStatus] = useState(false)
 
     const navigate = useNavigate()
 
     useEffect(
         function () {
-            async function getProductDetails() {
+            async function getProductAndUserDetails() {
                 try {
                     let res = await axios.get(`/productDetail`)
                     let data = res.data;
-                    console.log(data.userDetails)
                     setProductList(data.products);
                     setLogStatus({
                         statusCode: data.code,
                         status: data.code != 200 ? false : true,
-                        userDetails: data.userDetails
+                        userDetails: data.userDetails === null ? null : data.userDetails
                     })
-                    setCart(data.userDetails.cart)
+                    if (data.userDetails != null) {
+                        setAdminStatus(data.userDetails.isAdmin)
+                        setCart(data.userDetails.cart)
+                    }
                 }
+
                 catch (e) {
                     console.log(e)
                 }
             }
-            getProductDetails()
+            getProductAndUserDetails()
         }
-        , [cartItem, logStatus.status])
+        , [cartItem, logStatus.status, productList])
 
-    const logHandler = async (logStatus) => {
-        if (logStatus === 'logout') {
-            setLogStatus({ statusCode: 206, status: false })
+    const stayAwake = () => setInterval(async () => {
+        let res = await axios.get('/stayawake')
+        let data = res.data
+        console.log(data)
+    }, (840000 + 30000))
+    // stayAwake()
+
+
+    const navHandler = async (navName) => {
+        if (navName === 'logout') {
+            setLogStatus({ statusCode: 206, status: false, userDetails: {} })
             axios.post('/logout')
-        } else if (logStatus === 'login') {
-            navigate('/login')
+        } else {
+            navigate(navName)
         }
     }
 
     const addCart = async (cartItem) => {
-        setCartItem(cartItem)
-        await axios.post('/addCart', { cartItem })
+        setCartItem(cartItem);
+        await axios.post('/addCart', { cartItem });
     }
+
+    const updateStock = async (product) => {
+        await axios.post('/updateStock', { product })
+    }
+
+    const removeProduct = async (product) => {
+        setProductList((productItem) => {
+            return productItem.filter((e) => e._id != product._id)
+        })
+        await axios.delete('/deleteproduct', { data: { product } })
+    }
+
+    const userHomepage = (
+        <Grid container spacing={2} className="homeGrid">
+            {productList.map((product) => (
+                <ProductCard
+                    key={product._id}
+                    product={product}
+                    status={logStatus.status}
+                    addCart={addCart}
+                />
+            ))}
+        </Grid>
+    )
+
+    const adminHomepage = (
+        <Grid container spacing={2} className="homeGrid">
+            {productList.map((product) => (
+                <ProductCard
+                    key={product._id}
+                    product={product}
+                    status={logStatus.status}
+                    updateStock={updateStock}
+                    adminStatus={adminStatus}
+                    removeProduct={removeProduct}
+                />
+            ))}
+        </Grid>
+    )
 
     return (
         <Box sx={{ width: '100%' }}>
             <TopBar
-                logHandler={logHandler}
+                navHandler={navHandler}
                 status={logStatus.status}
                 userDetails={logStatus.userDetails} />
             <Grid container spacing={2} className="homeGrid">
-                {productList.map((product) => (
-                    <ProductCard
-                        key={product._id}
-                        product={product}
-                        status={logStatus.status}
-                        addCart={addCart}
-                    />
-                ))}
+                {adminStatus === true ? adminHomepage : userHomepage}
             </Grid>
             {logStatus.status === true && <Cart cartDetails={cart} />}
         </Box>

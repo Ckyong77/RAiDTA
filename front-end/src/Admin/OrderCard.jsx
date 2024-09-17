@@ -11,7 +11,7 @@ function OrderCard({ fulfilled, lineItems, orderId }) {
     const [complete, setComplete] = useState(fulfilled)
 
     const fulfillHandler = (event) => {
-        setComplete((completion)=> !completion)
+        setComplete((completion) => !completion)
     }
 
     return (
@@ -25,7 +25,7 @@ function OrderCard({ fulfilled, lineItems, orderId }) {
                     fontSize: 14,
                     textAlign: "left",
                     borderBottom: "1px solid rgba(24, 28, 20, 0.5)"
-                }}>
+                    }}>
                     Line Items: {lineItems.length}
                 </Typography>
                 {lineItems.map((item) => (

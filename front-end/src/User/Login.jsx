@@ -65,12 +65,12 @@ function Login() {
                     />
                 </div>
                 <span>
+                    <button>Login</button>
                     <button
                         style={{ backgroundColor: "red" }}
                         onClick={() => {
                             navigate('/')
                         }}>Cancel</button>
-                    <button>Login</button>
                 </span>
             </div>
         </form>

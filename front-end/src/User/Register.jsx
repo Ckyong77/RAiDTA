@@ -12,7 +12,6 @@ function Register() {
     const registerOptions = {
         username: { required: "username is required" },
         password: { required: "password is required" },
-        email: { required: "email is required" },
         firstName: { required: "first name is required" },
         lastName: { required: "last name is requried" }
     }
@@ -85,26 +84,14 @@ function Register() {
                         name='password'
                         {...register('password', registerOptions.password)} />
                 </div>
-                <div>
-                    <label htmlFor="email">Email<br /></label>
-                    {errors.email &&
-                        <small>
-                            {errors.email.message}<br />
-                        </small>}
-                    <input
-                        type="email"
-                        id='email'
-                        placeholder='Email@email.com'
-                        name='email'
-                        {...register('email', registerOptions.email)} />
-                </div>
                 <span>
-                    <button 
-                    style={{backgroundColor:"red"}} 
-                    onClick={()=>{
-                        navigate('/')
-                    }}>Cancel</button>
                     <button>Register</button>
+                    <button
+                        style={{ backgroundColor: "red" }}
+                        onClick={() => {
+                            navigate('/')
+                        }}>Cancel</button>
+
                 </span>
             </div>
         </form>

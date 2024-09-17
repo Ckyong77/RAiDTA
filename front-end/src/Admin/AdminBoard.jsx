@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-function AdminBoard (){
+function AdminBoard() {
 
     const [productList, setProductList] = useState([])
     const [logStatus, setLogStatus] = useState({ statusCode: 0, status: false, userDetails: {} })
@@ -29,7 +29,7 @@ function AdminBoard (){
                         status: data.code != 200 ? false : true,
                         userDetails: data.userDetails
                     })
-                    if(data.statusCode != 200){
+                    if (data.statusCode != 200) {
                         navigate('/')
                     }
                 }
@@ -42,8 +42,8 @@ function AdminBoard (){
         }
         , [])
 
-    const logHandler = async (logStatus) => {
-        navigate(logStatus)
+    const navHandler = async (navName) => {
+        navigate(navName)
     }
 
     console.log(orderList)
@@ -51,17 +51,17 @@ function AdminBoard (){
     return (
         <Box sx={{ width: '100%' }}>
             <TopBar
-                logHandler={logHandler}
+                navHandler={navHandler}
                 status={logStatus.status}
-                userDetails={logStatus.userDetails} 
-                page = 'admin'/>
+                userDetails={logStatus.userDetails}
+                page='admin' />
             <Grid container spacing={2} className="homeGrid">
-                {orderList.map((order)=> (
+                {orderList.map((order) => (
                     <OrderCard
-                    key={order._id}
-                    fulfilled={order.fulfilled}
-                    lineItems = {order.lineItems}
-                    orderId = {order._id}/>
+                        key={order._id}
+                        fulfilled={order.fulfilled}
+                        lineItems={order.lineItems}
+                        orderId={order._id} />
                 ))}
             </Grid>
         </Box>

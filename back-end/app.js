@@ -60,7 +60,7 @@ const sessionConfig = {
         secure: process.env.NODE_ENV != "production" ? false : true,
         expires: Date.now() + (1000 * 60 * 60 * 24 * 7), //session save for 1 week.
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        sameSite:'none'
+        sameSite: process.env.NODE_ENV != "production" ? false : 'none'
     }
 }
 
@@ -89,10 +89,26 @@ app.use(cors({
 app.get('/productDetail', isLoggedIn, async (req, res) => {
     const products = await Product.find({})
     const statusCode = res.statusCode
-    const userDetails = req.user
+    const user = req.user
+    const userDetails = await User.findById(user)
     res.json({ code: statusCode, products, userDetails })
 })
 
+app.post('/updateStock', isLoggedIn, isAdmin, async (req, res) => {
+    const product = req.body.product
+    await Product.findByIdAndUpdate(product._id, { ...product })
+})
+
+app.post('/addnew', isLoggedIn, isAdmin, async (req, res) => {
+    const { name, price, stock, image } = req.body.newProduct
+    const newProduct = await new Product({ name: name, price: parseFloat(price), stock: parseInt(stock), image: image })
+    await newProduct.save()
+})
+
+app.delete('/deleteproduct', isLoggedIn, isAdmin, async (req, res) => {
+    const deleteProduct = req.body.product
+    await Product.findByIdAndDelete(deleteProduct)
+})
 
 //User Routes 
 app.post('/register', async (req, res) => {
@@ -110,9 +126,12 @@ app.post('/login', passport.authenticate('local'), async (req, res) => {
     res.json('success')
 })
 
-app.post('/logout', (req, res) => {
-    req.session.destroy()
-    console.log('logged out')
+app.post('/logout', (req, res, next) => {
+    if (req.sessionID) {
+        req.logout(function (err) {
+            if (err) { return next(err) }
+        })
+    }
 })
 
 app.get('/currentuser', isLoggedIn, (req, res) => {
@@ -125,17 +144,32 @@ app.get('/currentuser', isLoggedIn, (req, res) => {
 app.post('/addcart', async (req, res) => {
     const { quantity, product, totalPrice } = { ...req.body.cartItem };
     const lineItems = { productId: product._id, quantity, productName: product.name, productPrice: product.price, totalPrice };
-    console.log(req.user._id)
     const userid = req.user._id;
     const foundUser = await User.findById(userid);
-    foundUser.cart.push(lineItems);
-    await User.findByIdAndUpdate(userid, { ...foundUser })
+    const userCart = foundUser.cart
+    if(userCart.length > 0){
+        let available = false;
+        for(let cartItem of userCart){
+            if(cartItem.productId === product._id){
+                available = true
+                cartItem.quantity = cartItem.quantity + quantity
+                cartItem.totalPrice = cartItem.totalPrice + totalPrice
+                break
+            }
+        }
+        if(!available){
+            userCart.push(lineItems)
+        }
+    }else{
+        userCart.push(lineItems)
+    }
+    await User.findByIdAndUpdate(userid, {...foundUser});
 })
 
 //order Route
 app.post('/checkout', isLoggedIn, async (req, res) => {
     const { lineItems, user } = req.body.order
-    const newOrder = new Order({ lineItems, user, fulfilled:false})
+    const newOrder = new Order({ lineItems, user, fulfilled: false })
     const savedOrder = await newOrder.save()
     let userData = await User.findById(user)
     userData.cart = []
@@ -158,7 +192,7 @@ app.get('/adminboard', isLoggedIn, isAdmin, async (req, res) => {
 
 
 //polling route
-app.get('/stayawake', (req,res)=>{
+app.get('/stayawake', (req, res) => {
     res.send('awake?')
 })
 

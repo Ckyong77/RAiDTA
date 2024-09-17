@@ -1,0 +1,8 @@
+.formWrapper {
+    background-color: grey;
+    margin: auto;
+    padding: 10px 100px 10px 100px;
+    border-radius: 20px;
+    width: 450px;
+}
+

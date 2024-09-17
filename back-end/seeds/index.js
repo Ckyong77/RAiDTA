@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 const Product = require('../models/product')
 const User = require('../models/user')
 
-const dbURL = process.env.DB_URL;
+const dbURL = process.env.NODE_ENV != "production" ? "mongodb://localhost:27017/RAiDTA" : process.env.DB_URL
 
 async function main() {
     await mongoose.connect(dbURL)
