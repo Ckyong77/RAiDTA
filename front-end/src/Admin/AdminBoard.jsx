@@ -13,10 +13,9 @@ import Stack from '@mui/material/Stack';
 
 function AdminBoard() {
 
-    const [productList, setProductList] = useState([])
     const [logStatus, setLogStatus] = useState({ statusCode: 0, status: false, userDetails: {} })
     const [orderList, setOrderList] = useState([])
-    const [cartItem, setCartItem] = useState({})
+    const [orderStatus, setOrderStatus] = useState({fulfilled:false})
 
     const navigate = useNavigate()
 
@@ -43,10 +42,19 @@ function AdminBoard() {
             }
             getAdminDetails()
         }
-        , [])
+        , [orderStatus.fulfilled])
 
     const navHandler = async (navName) => {
         navigate(navName)
+    }
+
+    const fulfillHandler = async (fulfillStatus, orderId) => {
+        let res = await axios.post('/orderfulfil', {orderId, fulfilled:fulfillStatus})
+        let data = res.data
+        console.log(data)
+        setOrderStatus({fulfilled:fulfillStatus})
+        // console.log(fulfillStatus)
+        console.log('run?')
     }
 
     return (
@@ -55,19 +63,22 @@ function AdminBoard() {
                 navHandler={navHandler}
                 status={logStatus.status}
                 userDetails={logStatus.userDetails}
-                page='admin' />
+                page='order'
+                message = 'cusOrder' />
 
             <Stack
                 spacing={2}
                 sx={{
                     justifyContent:"center",
-                    alignItems: "stretch"
+                    alignItems: "stretch",
+                    marginTop:'20%'
                 }}>
                 {orderList.map((order) => (
                     <OrderCard
                         key={order._id}
                         fulfilled={order.fulfilled}
                         lineItems={order.lineItems}
+                        fulfillHandler={fulfillHandler}
                         orderId={order._id} />
                 ))}
             </Stack>

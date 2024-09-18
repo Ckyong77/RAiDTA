@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import ProductCard from "../Product/ProductCard"
 import TopBar from "../TopBar"
 import "./AddNew.css"
+import { Stack, Button, capitalize } from "@mui/material"
 
 
 
@@ -13,7 +14,6 @@ function AddNew() {
 
     useEffect(function () {
         async function createNewProduct() {
-            console.log(newProduct)
             if (newProduct.name != '') {
                 await axios.post('/addnew', { newProduct })
             }
@@ -42,10 +42,8 @@ function AddNew() {
         }
     }
 
-
-
-    const navHandler = async (navName) => {
-        navigate(navName)
+    const navHandler = async (name) => {
+        navigate(name)
     }
 
 
@@ -56,28 +54,55 @@ function AddNew() {
 
     return (<>
         <TopBar
-            page={'admin'}
-            navHandler={navHandler} />
+            navHandler={navHandler}
+            message={'add'}
+            page={'order'} />
         <form onSubmit={handleSubmit(submitHandler)} className="formWrapper">
-            <div>
-                <label htmlFor="name">Product Name </label>
-                <span><input type="text" id="name" name="name" {...register('name', registerOptions.name)} /></span>
-            </div>
-            <div>
-                <label htmlFor="price">Product Price </label>
-                <span><input type="text" id="price" name="price" {...register('price', registerOptions.price)} /></span>
-            </div>
-            <div>
-                <label htmlFor="stock">Product Stock</label>
-                <span><input type="text" id="stock" name="stock" {...register('stock', registerOptions.stock)} /></span>
-            </div>
-            <div>
-                <label htmlFor="image">Product Image (URL) </label>
-                <span><input type="text" id="image" name="image" {...register('image')} /></span>
-            </div>
-            <div>
-                <button>Add New</button>
-            </div>
+            <Stack
+                direction='column'
+                spacing={0.5}
+                sx={{
+                    alignItems: 'center'
+                }}
+            >
+                <div>
+                    <label htmlFor="name">Product Name </label><br />
+                    <small>
+                        {errors.name && errors.name.message}
+                    </small>
+                    <span><input style={{ textTransform: 'capitalize' }} type="text" id="name" name="name" {...register('name', registerOptions.name)} /></span>
+                </div>
+                <Stack
+                    direction="row"
+                    sx={{ justifyContent: 'space-evenly' }}>
+                    <div>
+                        <label htmlFor="price">Product Price ($) </label>
+                        <br />
+                        <small>
+                            {errors.price && errors.price.message}
+                        </small>
+                        <input style={{ maxWidth: '150px' }} type="number" id="price" name="price" {...register('price', registerOptions.price)} />
+                    </div>
+                    <div className="numbers">
+                        <label htmlFor="stock">Product Stock</label>
+                        <br />
+                        <small>
+                            {errors.stock && errors.stock.message}
+                        </small>
+                        <input value={0}style={{ maxWidth: '150px' }} type="number" id="stock" name="stock" {...register('stock', registerOptions.stock)} />
+                    </div>
+                </Stack>
+                <div>
+                    <label htmlFor="image">Product Image (URL) </label>
+                    <span><input type="text" id="image" name="image" {...register('image')} /></span>
+                </div>
+                <Stack
+                    spacing={2}
+                    direction="row">
+                    <Button type="submit" variant="contained">Add</Button>
+                    <Button variant="contained" color="error" onClick={() => { navHandler('/') }}>Cancel</Button>
+                </Stack>
+            </Stack>
         </form>
     </>
     )

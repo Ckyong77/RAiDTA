@@ -4,7 +4,7 @@ import TopBar from "../TopBar"
 import { useNavigate } from "react-router-dom"
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import OrderCard from "../Admin/OrderCard";
+import OrderHistoryCard from "./OrderHistoryCard";
 
 
 function OrderHistory() {
@@ -42,26 +42,32 @@ function OrderHistory() {
         navigate(navName)
     }
 
+    const orderAgain = async (orderId) => {
+        await axios.post('/reorder', { orderId })
+    }
+
     return (
 
         <Box sx={{ width: '100%' }}>
             <TopBar
                 navHandler={navHandler}
                 message='orderHistory'
-                page="orderHistory"
+                page="order"
             />
             <Stack
                 spacing={2}
                 sx={{
                     justifyContent: "center",
-                    alignItems: "stretch"
+                    alignItems: "stretch",
+                    marginTop: '10%'
                 }}>
                 {orderList.map((order) => (
-                    <OrderCard
+                    <OrderHistoryCard
                         key={order._id}
-                        fulfilled={order.fulfilled}
+                        orderAgain={orderAgain}
                         lineItems={order.lineItems}
-                        orderId={order._id} />
+                        orderId={order._id}
+                        navHandler={navHandler} />
                 ))}
             </Stack>
 

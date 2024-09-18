@@ -6,16 +6,15 @@ import Typography from '@mui/material/Typography';
 import './OrderCard.css'
 import { useState } from 'react';
 
-function OrderCard({ fulfilled, lineItems, orderId }) {
+function OrderCard({ fulfilled, lineItems, orderId, fulfillHandler }) {
 
-    const [complete, setComplete] = useState(fulfilled)
-
-    const fulfillHandler = (event) => {
-        setComplete((completion) => !completion)
+    const toggleFulfill = () => {
+        fulfilled = !fulfilled
+        fulfillHandler(fulfilled, orderId)
     }
 
     return (
-        <Card sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 500 }}>
             <CardContent>
                 <Typography variant="subtitle1" component="div">
                     Order ID: {orderId}
@@ -25,7 +24,7 @@ function OrderCard({ fulfilled, lineItems, orderId }) {
                     fontSize: 14,
                     textAlign: "left",
                     borderBottom: "1px solid rgba(24, 28, 20, 0.5)"
-                    }}>
+                }}>
                     Line Items: {lineItems.length}
                 </Typography>
                 {lineItems.map((item) => (
@@ -41,8 +40,8 @@ function OrderCard({ fulfilled, lineItems, orderId }) {
                 }
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={fulfillHandler}>
-                    {complete === true ? "Fulfilled" : "Not Fulfilled"}
+                <Button size="small" onClick={toggleFulfill}>
+                    {fulfilled === true ? "Fulfilled" : "Not Fulfilled"}
                 </Button>
             </CardActions>
         </Card>

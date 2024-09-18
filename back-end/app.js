@@ -84,6 +84,24 @@ app.use(cors({
     credentials: true //to persist session when using different domains 
 }))
 
+const addOnCart = (userCart, item) => {
+    if (userCart.length > 0) {
+        let available = false;
+        for (let cartItem of userCart) {
+            if (cartItem.productId === item.productId) {
+                available = true
+                cartItem.quantity = cartItem.quantity + item.quantity
+                cartItem.totalPrice = cartItem.totalPrice + item.totalPrice
+                break
+            }
+        }
+        if (!available) {
+            return userCart.push(item)
+        }
+    } else {
+        return userCart.push(item)
+    }
+}
 
 //Product Routes
 app.get('/productDetail', isLoggedIn, async (req, res) => {
@@ -143,26 +161,11 @@ app.get('/currentuser', isLoggedIn, (req, res) => {
 //cart Route
 app.post('/addcart', async (req, res) => {
     const { quantity, product, totalPrice } = { ...req.body.cartItem };
-    const lineItems = { productId: product._id, quantity, productName: product.name, productPrice: product.price, totalPrice };
+    const cartItemDetails = { productId: product._id, quantity, productName: product.name, productPrice: product.price, totalPrice };
     const userid = req.user._id;
     const foundUser = await User.findById(userid);
-    const userCart = foundUser.cart
-    if (userCart.length > 0) {
-        let available = false;
-        for (let cartItem of userCart) {
-            if (cartItem.productId === product._id) {
-                available = true
-                cartItem.quantity = cartItem.quantity + quantity
-                cartItem.totalPrice = cartItem.totalPrice + totalPrice
-                break
-            }
-        }
-        if (!available) {
-            userCart.push(lineItems)
-        }
-    } else {
-        userCart.push(lineItems)
-    }
+    let userCart = foundUser.cart
+    userCart = addOnCart(userCart, cartItemDetails)
     await User.findByIdAndUpdate(userid, { ...foundUser });
 })
 
@@ -183,10 +186,29 @@ app.post('/checkout', isLoggedIn, async (req, res) => {
     res.json(savedOrder._id)
 })
 
+app.post('/reorder', isLoggedIn, async (req, res) => {
+    const orderId = req.body.orderId
+    const foundOrder = await Order.findById(orderId)
+    const foundUser = await User.findById(foundOrder.user)
+    let lineItems = foundOrder.lineItems
+    lineItems.map((item) => {
+        let userCart = foundUser.cart
+        addOnCart(userCart, item)
+    })
+    await User.findByIdAndUpdate(foundUser._id, foundUser)
+})
+
+app.post('/orderfulfil', isLoggedIn, isAdmin, async (req, res) => {
+    const { orderId, fulfilled } = req.body;
+    const foundOrder = await Order.findById(orderId)
+    foundOrder.fulfilled = fulfilled
+    await foundOrder.save()
+    res.json(foundOrder)
+})
+
 //Admin Route
 app.get('/adminboard', isLoggedIn, isAdmin, async (req, res) => {
     const orderList = await Order.find({})
-    console.log(orderList)
     res.json({ user: req.user, statusCode: res.statusCode, order: orderList })
 })
 
@@ -194,7 +216,7 @@ app.get('/adminboard', isLoggedIn, isAdmin, async (req, res) => {
 app.get('/customerBoard', isLoggedIn, async (req, res) => {
     const currentUser = req.user._id
     const cusOrder = await Order.find({ user: currentUser })
-    res.json({statusCode: res.statusCode, order: cusOrder })
+    res.json({ statusCode: res.statusCode, order: cusOrder })
 })
 
 

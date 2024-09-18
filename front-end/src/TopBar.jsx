@@ -34,7 +34,7 @@ function TopBar({ navHandler, status, userDetails, page, message }) {
             color="inherit"
             onClick={topNavHandler}
             name='adminboard'>
-            Adminboard
+            Customer Orders
         </Button>
             <Divider orientation='vertical' flexItem />
             <Button
@@ -57,7 +57,9 @@ function TopBar({ navHandler, status, userDetails, page, message }) {
 
     const topNavMessages = {
         'welcome': <>Welcome {userDetails != undefined && `${userDetails.firstName} ${userDetails.lastName}`}</>,
-        'orderHistory': <>Order History</>
+        'orderHistory': <>Order History</>,
+        'cusOrder': <>Customer Orders</>,
+        'add': <>Add New Products</>
     }
 
     return (
@@ -65,7 +67,7 @@ function TopBar({ navHandler, status, userDetails, page, message }) {
             <AppBar position="fixed">
                 <Toolbar>
                     {status === true && <> {userDetails.isAdmin === true ? adminTopNavButtons : customerTopNavButton}</>}
-                    {page === 'admin' || page === "orderHistory" && <Button
+                    {page === "order" && <Button
                         color="inherit"
                         onClick={topNavHandler}
                         name='/'>
@@ -74,7 +76,7 @@ function TopBar({ navHandler, status, userDetails, page, message }) {
                     {<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         {topNavMessages[message]}
                     </Typography>}
-                    {page==='home' && logInOutRegister}
+                    {page === 'home' && logInOutRegister}
                 </Toolbar>
             </AppBar>
         </Box>

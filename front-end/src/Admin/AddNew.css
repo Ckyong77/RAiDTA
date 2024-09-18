@@ -1,8 +1,14 @@
 .formWrapper {
     background-color: grey;
-    margin: auto;
-    padding: 10px 100px 10px 100px;
+    padding: 10%;
     border-radius: 20px;
-    width: 450px;
+    width: 350px;
+}
+
+.formWrapper input {
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    font-size: 20px;
 }
 
