@@ -9,21 +9,21 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import "./Cart.css"
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-function Cart({ cartDetails }) {
+
+function Cart({ cartDetails, deleteCartItem }) {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
-
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     };
 
     let totalPrice = 0;
     cartDetails.map((item) =>
-        totalPrice = totalPrice + item.totalPrice
+        totalPrice = Math.round(totalPrice + item.totalPrice * 100) / 100
     )
 
     const checkoutHandler = () => {
@@ -34,20 +34,20 @@ function Cart({ cartDetails }) {
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
             <List>
                 {cartDetails.map((item, index) => (
-                    <ListItem key={index} disablePadding>
-                        <ListItemButton>
-                            <div className='cartItem'>
-                                <ListItemText primary={'Product Name: ' + item.productName} />
-                                <ListItemText primary={'Quantity: ' + item.quantity} />
-                                <ListItemText primary={'Unit Price: $' + item.productPrice} />
-                                <ListItemText primary={'Item Subtotal: $' + item.totalPrice} />
-                            </div>
-                        </ListItemButton>
+                    <ListItem key={index} disablePadding className='cartItem'>
+                        <div id='details'>
+                            <ListItemText secondary={item.productName} primary={'Product Name: '} />
+                            <ListItemText secondary={item.quantity} primary={'Quantity: '} />
+                            <ListItemText secondary={' $' + item.productPrice} primary={'Unit Price:'} />
+                            <ListItemText secondary={' $' + item.totalPrice} primary={'Item Subtotal:'} />
+                        </div>
+                        <Divider orientation='vertical' flexItem variant='middle' sx={{ paddingLeft: '10%' }} />
+                        <DeleteIcon className='deleteBtn' sx={{ fontSize: '30px' }} onClick={() => deleteCartItem(item.productId)} />
                     </ListItem>
                 ))}
             </List>
             <div className="totalPrice">
-                <p>Total Cost: ${totalPrice.toFixed(2)}</p>
+                <p>Total Cost: ${totalPrice}</p>
                 <Button onClick={checkoutHandler}>Checkout</Button>
             </div>
         </Box>

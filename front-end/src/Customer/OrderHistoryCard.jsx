@@ -16,7 +16,7 @@ import { Modal as BaseModal } from '@mui/base/Modal';
 import { Fragment } from 'react';
 
 
-function OrderCard({ orderAgain, lineItems, orderId, navHandler }) {
+function OrderCard({ orderAgain, lineItems, orderId, navHandler, date}) {
 
     const [open, setOpen] = useState(false);
     const handleOpen = (event) => {
@@ -46,9 +46,16 @@ function OrderCard({ orderAgain, lineItems, orderId, navHandler }) {
                         color: 'text.secondary',
                         fontSize: 14,
                         textAlign: "left",
-                        borderBottom: "1px solid rgba(24, 28, 20, 0.5)"
                     }}>
                         Line Items: {lineItems.length}
+                    </Typography>
+                    <Typography gutterBottom sx={{
+                        color: 'text.secondary',
+                        fontSize: 14,
+                        textAlign: "left",
+                        borderBottom: "1px solid rgba(24, 28, 20, 0.5)"
+                    }}>
+                        Date: {date}
                     </Typography>
                     {lineItems.map((item) => (
                         <div className="orderCard">

@@ -66,6 +66,7 @@ function OrderHistory() {
                         key={order._id}
                         orderAgain={orderAgain}
                         lineItems={order.lineItems}
+                        date = {order.date}
                         orderId={order._id}
                         navHandler={navHandler} />
                 ))}

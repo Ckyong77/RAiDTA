@@ -29,7 +29,7 @@ function ProductCard({ product, status, addCart, adminStatus, updateStock, remov
         }
     }
     function cart() {
-        const totalPrice = parseFloat(product.price * qty)
+        const totalPrice = parseFloat(((product.price * 100) * qty) / 100)
         const cartItem = {
             product: product,
             quantity: qty,

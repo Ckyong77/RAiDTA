@@ -1,33 +1,59 @@
-.cartIcon{
+.cartIcon {
     border: 1px solid white;
     background-color: beige;
     border-radius: 100px;
     padding: 20%;
 }
 
-.cartWrapper{
-    position:sticky;
-    bottom:20px;
+.cartWrapper {
+    position: sticky;
+    bottom: 20px;
     margin-left: 95%;
 }
 
-.cartItem{
+.cartItem {
     background-color: beige;
     width: 100%;
     border-bottom: 2px solid grey;
     border-radius: 20px;
-    padding-left: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
-.totalPrice{
+.cartItem #details {
+    padding-right: 5%;
+}
+
+.totalPrice {
     border-top: 1px solid grey;
     margin-top: 50%;
     font-size: 40px;
-    bottom:20px;
+    bottom: 20px;
     text-align: center;
 }
 
-.totalPrice button{
+.totalPrice button {
     background-color: #507687;
     color: #FCFAEE;
+}
+
+.cartItem .MuiListItemText-primary {
+    font-size: 0.85em;
+    font-weight: bolder;
+}
+
+.cartItem .MuiListItemText-secondary {
+    font-size: 1em;
+}
+
+.deleteBtn :hover {
+    color: #C96868;
+}
+
+.deleteBtn {
+    background-color: #FFF4EA;
+    margin-left: 17%;
+    cursor: pointer;
+    font-size: 40px;
+    border-radius: 100%;
 }

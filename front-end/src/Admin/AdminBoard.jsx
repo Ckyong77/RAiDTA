@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { Divider } from '@mui/material';
+import './AdminBoard.css'
 
 
 
@@ -84,7 +85,7 @@ function AdminBoard() {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                <h2
+                <h2 
                     onClick={filterOrder}
                 >FULFILLED</h2>
                 <Divider
@@ -109,6 +110,7 @@ function AdminBoard() {
                         key={order._id}
                         fulfilled={order.fulfilled}
                         lineItems={order.lineItems}
+                        date={order.date}
                         fulfillHandler={fulfillHandler}
                         orderId={order._id} />
                 ))}

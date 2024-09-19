@@ -36,7 +36,7 @@ function TopBar({ navHandler, status, userDetails, page, message }) {
             name='adminboard'>
             Customer Orders
         </Button>
-            <Divider orientation='vertical' flexItem />
+            <Divider orientation='vertical' flexItem sx={{ backgroundColor: '#caf0f8' }} variant='middle'/>
             <Button
                 color="inherit"
                 onClick={topNavHandler}
@@ -54,9 +54,8 @@ function TopBar({ navHandler, status, userDetails, page, message }) {
             History
         </Button>
     )
-
     const topNavMessages = {
-        'welcome': <>Welcome {userDetails != undefined && `${userDetails.firstName} ${userDetails.lastName}`}</>,
+        'welcome': <>Welcome {userDetails != null && `${userDetails.firstName} ${userDetails.lastName}`}</>,
         'orderHistory': <>Order History</>,
         'cusOrder': <>Customer Orders</>,
         'add': <>Add New Products</>

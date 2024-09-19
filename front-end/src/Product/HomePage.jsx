@@ -62,8 +62,9 @@ function HomePage() {
     }
 
     const addCart = async (cartItem) => {
+        const currentUser = logStatus.userDetails._id
         setCartItem(cartItem);
-        await axios.post('/addCart', { cartItem });
+        await axios.post('/addCart', { cartItem , currentUser});
     }
 
     const updateStock = async (product) => {
@@ -75,6 +76,12 @@ function HomePage() {
             return productItem.filter((e) => e._id != product._id)
         })
         await axios.delete('/deleteproduct', { data: { product } })
+    }
+
+    const deleteCartItem = async (cartItem) => {
+        const currentUser = logStatus.userDetails._id
+        await axios.delete('/deleteCartItem', {data: {cartItem, currentUser}})
+
     }
 
     const userHomepage = (
@@ -107,16 +114,16 @@ function HomePage() {
 
     const loadingPage = (
         <>
-            <h1>Please wait while we connect to the server</h1>
+            <h1>Loading...</h1>
             <LinearProgress
-                sx={{ width: '100%' ,color: 'grey.500'}}
-                />
+                sx={{ width: '100%', color: 'grey.500' }}
+            />
         </>
     )
 
     return (
         <>
-            {productList.length === 0 ? loadingPage : <Box sx={{ width: '100%' }}>
+            {productList.length===0 ? loadingPage : <Box sx={{ width: '100%' }}>
                 <TopBar
                     navHandler={navHandler}
                     status={logStatus.status}
@@ -126,7 +133,7 @@ function HomePage() {
                 <Grid container spacing={2} className="homeGrid">
                     {adminStatus === true ? adminHomepage : userHomepage}
                 </Grid>
-                {logStatus.status === true && <Cart cartDetails={cart} />}
+                {logStatus.status === true && <Cart cartDetails={cart} deleteCartItem={deleteCartItem} />}
             </Box>}
 
         </>

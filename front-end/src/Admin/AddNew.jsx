@@ -81,7 +81,7 @@ function AddNew() {
                         <small>
                             {errors.price && errors.price.message}
                         </small>
-                        <input style={{ maxWidth: '150px' }} type="number" id="price" name="price" {...register('price', registerOptions.price)} />
+                        <input step='0.01' placeholder="$0.00"style={{ maxWidth: '150px' }} type="number" id="price" name="price" {...register('price', registerOptions.price)} />
                     </div>
                     <div className="numbers">
                         <label htmlFor="stock">Product Stock</label>
@@ -89,7 +89,7 @@ function AddNew() {
                         <small>
                             {errors.stock && errors.stock.message}
                         </small>
-                        <input value={0}style={{ maxWidth: '150px' }} type="number" id="stock" name="stock" {...register('stock', registerOptions.stock)} />
+                        <input placeholder="0" style={{ maxWidth: '150px' }} type="number" id="stock" name="stock" {...register('stock', registerOptions.stock)} />
                     </div>
                 </Stack>
                 <div>

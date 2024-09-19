@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import './OrderCard.css'
 import { useState } from 'react';
 
-function OrderCard({ fulfilled, lineItems, orderId, fulfillHandler }) {
+function OrderCard({ fulfilled, lineItems, orderId, fulfillHandler, date }) {
 
     const toggleFulfill = () => {
         fulfilled = !fulfilled
@@ -23,9 +23,16 @@ function OrderCard({ fulfilled, lineItems, orderId, fulfillHandler }) {
                     color: 'text.secondary',
                     fontSize: 14,
                     textAlign: "left",
-                    borderBottom: "1px solid rgba(24, 28, 20, 0.5)"
                 }}>
                     Line Items: {lineItems.length}
+                </Typography>
+                <Typography gutterBottom sx={{
+                    color: 'text.secondary',
+                    fontSize: 14,
+                    textAlign: "left",
+                    borderBottom: "1px solid rgba(24, 28, 20, 0.5)"
+                }}>
+                    Date Purchased: {date}
                 </Typography>
                 {lineItems.map((item) => (
                     <div className="orderCard">
