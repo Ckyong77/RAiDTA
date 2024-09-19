@@ -16,14 +16,14 @@ When first loading of the web application, it might take up to 50 seconds for th
 This is hosted on Render with the free version where 15 minutes of inactivity will cause the backend to wind down. 
 
 ### User Stories fulfilled
-Required
+
+# Required
 1) Customer is able to view the list of fruits available for purchase, with stock and pricing information.
 2) Customer is able to keep track of the fruits and quantity that was shortlisted along with the amount for payment. 
 3) Customer is able to submit the order for purchase once done shopping. 
 4) Owner is able to see the orders that customers have purchased and submitted for fulfillment. 
 
-
-### Optinal User Stories fulfilled
+# Optinal
 1) Owner is able to add new fruits and amend stock levels accordingly
 2) Customer is able to log in and see order history
 3) Customer is able to re-order a previous order for quick purchase 
@@ -32,7 +32,7 @@ Required
 6) Owner is able to restrict what customers can or cannot see and amending things that they are not suppose to amend. 
 
 
-## Run through program
+### Run through program
 # Customer account
 1) When first entering the web app, the page **MIGHT** be loading as it is waiting for the backend server to spin up. 
 2) As a guest to the web page, you will be able to see all the fruits that are available with pricing information and stock information. However, as a guest you are not able to add things into your cart. 
