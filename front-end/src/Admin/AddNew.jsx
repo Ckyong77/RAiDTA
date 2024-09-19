@@ -2,10 +2,9 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import ProductCard from "../Product/ProductCard"
 import TopBar from "../TopBar"
 import "./AddNew.css"
-import { Stack, Button, capitalize } from "@mui/material"
+import { Stack, Button } from "@mui/material"
 
 
 

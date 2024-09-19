@@ -12,9 +12,13 @@ import OrderHistory from './Customer/OrderHistory'
 
 function App() {
 
+  //to shorten all the route that we send to the API.
+  //so all API requests made will be default starting wtih the backend URL.
   axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
-  axios.defaults.withCredentials = true; // THIS IS VERY IMPORTANT TO INCLUDE!!!!
+  //as the backend session require withCredentials to allow session to persist
+  //we will set all requests default withCredentials to be true. 
+  axios.defaults.withCredentials = true;
 
   return (
     <>
@@ -25,7 +29,7 @@ function App() {
         <Route path="checkout" element={<Checkout />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path='/' element={<HomePage />} />
+        <Route path='/*' element={<HomePage />} />
       </Routes>
     </>
   )

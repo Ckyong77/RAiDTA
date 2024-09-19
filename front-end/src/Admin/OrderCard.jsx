@@ -4,7 +4,6 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import './OrderCard.css'
-import { useState } from 'react';
 
 function OrderCard({ fulfilled, lineItems, orderId, fulfillHandler, date }) {
 

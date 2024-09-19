@@ -46,10 +46,9 @@ function Checkout() {
         }, [order]
     )
 
-
     let finalTotal = 0;
     cart.map((item) =>
-        finalTotal = finalTotal + item.totalPrice
+        finalTotal = (Math.round(finalTotal*100) + Math.round(item.totalPrice*100))/100
     )
 
     const transactionHandler = async (event) => {

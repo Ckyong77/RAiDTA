@@ -11,7 +11,8 @@ function TopBar({ navHandler, status, userDetails, page, message }) {
     const topNavHandler = (event) => {
         navHandler(event.target.name)
     }
-
+    
+    //displaying the button options
     const logInOutRegister = (<>
         <Button
             color="inherit"
@@ -34,7 +35,7 @@ function TopBar({ navHandler, status, userDetails, page, message }) {
             color="inherit"
             onClick={topNavHandler}
             name='adminboard'>
-            Customer Orders
+            Orders
         </Button>
             <Divider orientation='vertical' flexItem sx={{ backgroundColor: '#caf0f8' }} variant='middle'/>
             <Button
@@ -54,6 +55,8 @@ function TopBar({ navHandler, status, userDetails, page, message }) {
             History
         </Button>
     )
+
+    //messages to display on the top Nav bar
     const topNavMessages = {
         'welcome': <>Welcome {userDetails != null && `${userDetails.firstName} ${userDetails.lastName}`}</>,
         'orderHistory': <>Order History</>,

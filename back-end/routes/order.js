@@ -45,7 +45,7 @@ router.post('/checkout', isLoggedIn, async (req, res) => {
     lineItems.map(async (item) => {
         const itemId = item.productId;
         const foundProduct = await Product.findById(itemId)
-        foundProduct.stock = foundProduct.stock - item.quantity
+        foundProduct.stock = (foundProduct.stock - item.quantity) <= 0 ? 0 : (foundProduct.stock - item.quantity)
         await foundProduct.save()
     })
     res.json(savedOrder._id)

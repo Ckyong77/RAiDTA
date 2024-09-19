@@ -4,8 +4,6 @@ import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import "./Cart.css"
@@ -23,7 +21,7 @@ function Cart({ cartDetails, deleteCartItem }) {
 
     let totalPrice = 0;
     cartDetails.map((item) =>
-        totalPrice = Math.round(totalPrice + item.totalPrice * 100) / 100
+        totalPrice = (Math.round(totalPrice*100) + Math.round(item.totalPrice*100))/100
     )
 
     const checkoutHandler = () => {

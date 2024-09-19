@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const { isLoggedIn, isAdmin } = require('../middleware')
 const User = require('../models/user')
-const Order = require('../models/order')
 const Product = require('../models/product')
 
 //Product Routes

@@ -51,8 +51,19 @@ function ProductCard({ product, status, addCart, adminStatus, updateStock, remov
 
 
     function qtyChangeHandler(event) {
-        setQty(event.target.value < 0 || isNaN(event.target.value) ? 0 : parseInt(event.target.value))
+        if (event.target.value < 0 || isNaN(event.target.value)) {
+            setQty(0)
+        } else {
+            parseInt(event.target.value)
+        }
     }
+
+    const cardActionStylesLayout = ({
+        maxWidth: '30px',
+        maxHeight: '50px',
+        minWidth: '30px',
+        minHeight: '50px'
+    })
 
     const userCard = (<>
         <CardMedia className='image'
@@ -77,33 +88,26 @@ function ProductCard({ product, status, addCart, adminStatus, updateStock, remov
                     container spacing={{ xs: 2 }}
                     justifyContent="center"
                 >
-                    <Button style={{
-                        maxWidth: '30px',
-                        maxHeight: '50px',
-                        minWidth: '30px',
-                        minHeight: '50px'
-                    }}
+                    <Button style={cardActionStylesLayout}
                         onClick={qtyHandler}
                         name="minus"
                     >-</Button>
                     <TextField style={{
                         maxWidth: '50px',
-                        maxHeight: '30px',
-                        minWidth: '50px',
-                        minHeight: '30px'
+                        maxHeight: '50px',
+                        minHeight: '50px'
                     }}
                         id="quantity"
                         name="quantity"
                         onChange={qtyChangeHandler}
                         value={qty} />
-                    <Button style={{
-                        maxWidth: '30px',
-                        maxHeight: '50px',
-                        minWidth: '30px',
-                        minHeight: '50px'
-                    }} onClick={qtyHandler}
+                    <Button style={cardActionStylesLayout} onClick={qtyHandler}
                         name="plus">+</Button>
-                    <Button size="small" color="primary" onClick={cart}>
+                    <Button
+                        disabled = {product.stock <= 0}
+                        size="small"
+                        color="primary"
+                        onClick={cart}>
                         ADD TO CART
                     </Button>
                 </Grid>
@@ -138,12 +142,7 @@ function ProductCard({ product, status, addCart, adminStatus, updateStock, remov
                         container spacing={{ xs: 2 }}
                         justifyContent="center"
                     >
-                        <Button style={{
-                            maxWidth: '30px',
-                            maxHeight: '50px',
-                            minWidth: '30px',
-                            minHeight: '50px'
-                        }}
+                        <Button style={cardActionStylesLayout}
                             onClick={qtyHandler}
                             name="minus"
                         >-</Button>
@@ -157,12 +156,8 @@ function ProductCard({ product, status, addCart, adminStatus, updateStock, remov
                             name="quantity"
                             onChange={qtyChangeHandler}
                             value={qty} />
-                        <Button style={{
-                            maxWidth: '30px',
-                            maxHeight: '50px',
-                            minWidth: '30px',
-                            minHeight: '50px'
-                        }} onClick={qtyHandler}
+                        <Button style={cardActionStylesLayout}
+                            onClick={qtyHandler}
                             name="plus">+</Button>
                         <Button size="small" variant="outlined" color="primary" onClick={update}>
                             Update Stock
