@@ -7,6 +7,7 @@ import axios from 'axios'
 import './HomePage.css'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LinearProgress } from '@mui/material';
 
 function HomePage() {
     const [productList, setProductList] = useState([])
@@ -48,7 +49,7 @@ function HomePage() {
         let data = res.data
         console.log(data)
     }, (840000 + 30000))
-    // stayAwake()
+    stayAwake()
 
 
     const navHandler = async (navName) => {
@@ -104,19 +105,31 @@ function HomePage() {
         </Grid>
     )
 
+    const loadingPage = (
+        <>
+            <h1>Please wait while we connect to the server</h1>
+            <LinearProgress
+                sx={{ width: '100%' ,color: 'grey.500'}}
+                />
+        </>
+    )
+
     return (
-        <Box sx={{ width: '100%' }}>
-            <TopBar
-                navHandler={navHandler}
-                status={logStatus.status}
-                userDetails={logStatus.userDetails} 
-                message = 'welcome'
-                page = "home"/>
-            <Grid container spacing={2} className="homeGrid">
-                {adminStatus === true ? adminHomepage : userHomepage}
-            </Grid>
-            {logStatus.status === true && <Cart cartDetails={cart} />}
-        </Box>
+        <>
+            {productList.length === 0 ? loadingPage : <Box sx={{ width: '100%' }}>
+                <TopBar
+                    navHandler={navHandler}
+                    status={logStatus.status}
+                    userDetails={logStatus.userDetails}
+                    message='welcome'
+                    page="home" />
+                <Grid container spacing={2} className="homeGrid">
+                    {adminStatus === true ? adminHomepage : userHomepage}
+                </Grid>
+                {logStatus.status === true && <Cart cartDetails={cart} />}
+            </Box>}
+
+        </>
     )
 }
 

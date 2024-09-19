@@ -6,7 +6,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
-
+import { Divider } from '@mui/material';
 
 
 
@@ -15,7 +15,8 @@ function AdminBoard() {
 
     const [logStatus, setLogStatus] = useState({ statusCode: 0, status: false, userDetails: {} })
     const [orderList, setOrderList] = useState([])
-    const [orderStatus, setOrderStatus] = useState({fulfilled:false})
+    const [orderStatus, setOrderStatus] = useState({ fulfilled: false })
+    const [filteredOrderList, setFilteredOrderList] = useState([])
 
     const navigate = useNavigate()
 
@@ -25,6 +26,7 @@ function AdminBoard() {
                 try {
                     let res = await axios.get(`/adminboard`)
                     let data = res.data;
+                    setFilteredOrderList(data.order)
                     setOrderList(data.order)
                     setLogStatus({
                         statusCode: data.code,
@@ -44,17 +46,26 @@ function AdminBoard() {
         }
         , [orderStatus.fulfilled])
 
+
+
     const navHandler = async (navName) => {
         navigate(navName)
     }
 
+    const filterOrder = (event) => {
+        if (event.target.textContent === 'FULFILLED') {
+            setFilteredOrderList(orderList.filter((order) => order.fulfilled === true))
+        } else{
+            setFilteredOrderList(orderList.filter((order) => order.fulfilled === false))
+
+        }
+    }
+
     const fulfillHandler = async (fulfillStatus, orderId) => {
-        let res = await axios.post('/orderfulfil', {orderId, fulfilled:fulfillStatus})
+        let res = await axios.post('/orderfulfil', { orderId, fulfilled: fulfillStatus })
         let data = res.data
         console.log(data)
-        setOrderStatus({fulfilled:fulfillStatus})
-        // console.log(fulfillStatus)
-        console.log('run?')
+        setOrderStatus({ fulfilled: fulfillStatus })
     }
 
     return (
@@ -64,16 +75,36 @@ function AdminBoard() {
                 status={logStatus.status}
                 userDetails={logStatus.userDetails}
                 page='order'
-                message = 'cusOrder' />
+                message='cusOrder' />
+            <Stack
+                direction="row"
+                spacing={4}
+                sx={{
+                    marginTop: '10%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                <h2
+                    onClick={filterOrder}
+                >FULFILLED</h2>
+                <Divider
+                    orientation='vertical'
+                    flexItem
+                    sx={{ backgroundColor: '#caf0f8' }}
+                />
+                <h2
+                    onClick={filterOrder}
+                >NOT FULFILLED</h2>
+            </Stack>
 
             <Stack
                 spacing={2}
                 sx={{
-                    justifyContent:"center",
+                    justifyContent: "center",
                     alignItems: "stretch",
-                    marginTop:'20%'
+                    marginTop: '5%'
                 }}>
-                {orderList.map((order) => (
+                {filteredOrderList.map((order) => (
                     <OrderCard
                         key={order._id}
                         fulfilled={order.fulfilled}
