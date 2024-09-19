@@ -11,10 +11,10 @@ router.post('/register', async (req, res) => {
     try {
         const { username, password, firstName, lastName } = req.body.formData
         const newUser = await new User({ username, firstName, lastName, isAdmin: false })
-        await User.register(newUser, password)
-        res.json('Registered')
+        const registereduser = await User.register(newUser, password)
+        res.json('success')
     } catch (e) {
-        res.json(e)
+        res.status(e.statusCode || 500).json({message:e.message}); //raise this so that front end can catch it as an error
     }
 })
 

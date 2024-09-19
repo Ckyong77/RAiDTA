@@ -125,7 +125,7 @@ function HomePage() {
                 <Grid container spacing={2} className="homeGrid">
                     {adminStatus === true ? adminHomepage : userHomepage}
                 </Grid>
-                {logStatus.status === true && <Cart cartDetails={cart} deleteCartItem={deleteCartItem} />}
+                {(logStatus.status === true  && adminStatus != true)&& <Cart cartDetails={cart} deleteCartItem={deleteCartItem} />}
             </Box>}
 
         </>

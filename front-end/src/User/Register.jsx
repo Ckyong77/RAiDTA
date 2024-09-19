@@ -7,6 +7,7 @@ import "./Register.css"
 function Register() {
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm()
+    const [registerError, setRegisterError] = useState('')
     const navigate = useNavigate()
 
     const registerOptions = {
@@ -16,18 +17,26 @@ function Register() {
         lastName: { required: "last name is requried" }
     }
 
-    const registerHandler = (formData) => {
+    const registerHandler = async (formData) => {
+        try{
         formData.username = formData.username.toLowerCase()
-        let res = axios.post(`/register`, { formData })
+        let res = await axios.post(`/register`, { formData })
         let data = res.data
         console.log(data)
         navigate('/login')
         reset();
+        } catch(e){
+            setRegisterError(e.response.data.message)
+        }
     }
 
     return (
         <form onSubmit={handleSubmit(registerHandler)} className='formWrapper'>
             <h1>Register</h1>
+            {registerError && <>
+                <small>
+                    {registerError}
+                </small></>}
             <div className="regisWrapper">
                 <div>
                     <label htmlFor="firstName">First Name<br /></label>
