@@ -45,7 +45,7 @@ function AdminBoard() {
             }
             getAdminDetails()
         }
-        , [orderStatus.fulfilled])
+        , [orderStatus])
 
 
 
