@@ -46,3 +46,13 @@ Required
 1) When the admin first log in, Admin will be able to see all the fruits that the shop owns and the owner can increase the stock or delete the item or their choice. 
 2) Admin can click on 'Orders' to view all the orders placed by the customer and can click on the fulfill button to simulate a fulfillment of the purchase. Admin can also filter the orders by clicking on 'FULLFILLED' or 'NOT FULFILLED' to view the orders. 
 3) From the homepage, admin can click on "ADD NEW" to add new products into the list by filling up the details in the page. 
+
+
+## Accounts to log in to the web app
+# Customer 
+username: test1
+password: test1
+
+# Admin
+username: admin
+password: admin
