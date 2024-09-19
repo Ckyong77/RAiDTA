@@ -44,14 +44,6 @@ function HomePage() {
         }
         , [cartItem, logStatus.status, productList])
 
-    const stayAwake = () => setInterval(async () => {
-        let res = await axios.get('/stayawake')
-        let data = res.data
-        console.log(data)
-    }, (840000 + 30000))
-    stayAwake()
-
-
     const navHandler = async (navName) => {
         if (navName === 'logout') {
             setLogStatus({ statusCode: 206, status: false, userDetails: {} })

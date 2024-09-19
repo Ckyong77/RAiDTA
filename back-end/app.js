@@ -15,9 +15,6 @@ const User = require('./models/user')
 const Product = require('./models/product')
 const Order = require('./models/order')
 
-//require middleware
-const { isLoggedIn } = require('./middleware');
-const { isAdmin } = require('./middleware')
 
 //require Routes
 const userRoutes = require('./routes/user')
@@ -31,7 +28,6 @@ const app = express();
 
 //initialize mongodb
 const dbURL = process.env.NODE_ENV != "production" ? "mongodb://localhost:27017/RAiDTA" : process.env.DB_URL
-console.log('db url is: ', dbURL)
 async function main() {
     await mongoose.connect(dbURL)
 }
@@ -94,31 +90,6 @@ app.use(cors({
 app.use('/', userRoutes)
 app.use('/', orderRoutes)
 app.use('/', productRoutes)
-
-const addOnCart = (userCart, item) => {
-    if (userCart.length > 0) {
-        let available = false;
-        for (let cartItem of userCart) {
-            if (cartItem.productId === item.productId) {
-                available = true
-                cartItem.quantity = cartItem.quantity + item.quantity
-                cartItem.totalPrice = cartItem.totalPrice + item.totalPrice
-                break
-            }
-        }
-        if (!available) {
-            return userCart.push(item)
-        }
-    } else {
-        return userCart.push(item)
-    }
-}
-
-
-//polling route
-app.get('/stayawake', (req, res) => {
-    res.send('awake?')
-})
 
 //Default Route
 
