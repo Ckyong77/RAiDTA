@@ -65,7 +65,6 @@ function AdminBoard() {
     const fulfillHandler = async (fulfillStatus, orderId) => {
         let res = await axios.post('/orderfulfil', { orderId, fulfilled: fulfillStatus })
         let data = res.data
-        console.log(data)
         setOrderStatus({ fulfilled: fulfillStatus })
     }
 

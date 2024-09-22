@@ -16,7 +16,6 @@ function Login() {
             let { username, password } = { ...loginData }
             username = username.toLowerCase()
             let res = await axios.post(`/login`, { username, password })
-            console.log(res.data)
             reset();
             navigate('/')
         } catch (e) {

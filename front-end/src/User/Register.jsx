@@ -22,7 +22,6 @@ function Register() {
         formData.username = formData.username.toLowerCase()
         let res = await axios.post(`/register`, { formData })
         let data = res.data
-        console.log(data)
         navigate('/login')
         reset();
         } catch(e){

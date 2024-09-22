@@ -34,9 +34,7 @@ function Checkout() {
     useEffect(
         function () {
             async function sendOrder() {
-                console.log(order.lineItems)
                 if (order.lineItems != undefined ) {
-                    console.log('sending!')
                     let res = await axios.post('/checkout', { order })
                     let data = res.data
                     data != undefined && navigate('/')
